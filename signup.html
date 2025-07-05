@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>Sign Up | AI Blog Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+     <!--Navbar-->
+    <nav class="bg-blue-600 p-4 text-white flex justify-between">
+        <div>
+            <h1 class="text-3xl font-bold">AI Blog Gen.</h1>
+        </div>
+        <div>
+            <a href="#" class="text-white hover:underline">Login</a>
+        </div>
+    </nav>
+
+<!--    main content -->
+    <div class="flex items-center justify-center h-screen">
+        <div class="bg-white p-8 shadow-md rounded-lg max-w-md w-full">
+
+<!--            login form-->
+            <form class="space-y-4">
+                <h2 class="text-xl font-semibold">Create an account</h2>
+                <div>
+                    <label  for="username" class="block mb-1 font-medium">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username..." class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label  for="email" class="block mb-1 font-medium">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email..." class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label  for="password" class="block mb-1 font-medium">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password..." class="w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label  for="repeatPassword" class="block mb-1 font-medium">Confirm Password</label>
+                    <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Confirm your password..." class="w-full p-2 border rounded">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Sign up</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
