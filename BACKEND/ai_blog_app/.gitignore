@@ -1,1 +1,2 @@
 ./ai_blog_app/settings.py
+./blog_generator/views.py
