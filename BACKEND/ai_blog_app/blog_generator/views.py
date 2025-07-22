@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from pytube import YouTube
 import assemblyai as aai
 import openai
+from .models import BlogPost
 
 # Create your views here.
 @login_required # tells the web app login is required to access homepage
@@ -44,6 +45,13 @@ def generate_blog(request):
             return JsonResponse({'error':"Failed to generate blog article"}, status=500)
 
         # save blog article to database
+        new_blog_article = BlogPost.objects.create(
+            user=request.user,
+            youtube_title=title,
+            youtube_link=yt_link,
+            generated_content=blog_content,
+        )
+        new_blog_article.save()
 
         # return blog article as a response
         return JsonResponse({'content': blog_content})
@@ -71,13 +79,13 @@ def download_audio(link):
 # get caption transcribe
 def get_transcription(link):
     audio_file = download_audio(link)
-    aai.settings.api_key = "1fa3a2ab9330406591e3743e73a8a586"
+    aai.settings.api_key = "Paste AssemblyAI API Key here" #<<================ API Key
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(audio_file)
     return transcript.text
 
 def generate_blog_from_transcription(transcription):
-    openai.api_key = "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"
+    openai.api_key = "Paste OpenAI API Key here...."  #<<================ API Key
 
     prompt = f"Based on the following transcript from a YouTube video, write a comprehensive blog article, write it based on the transcript, but dont make it look like a youtube video, make it look like a proper blog article:\n\n{transcription}\n\nArticle:"
 
@@ -91,6 +99,18 @@ def generate_blog_from_transcription(transcription):
     return generated_content
 
 # =============================================================================================
+
+def blog_list(request):
+    blog_articles = BlogPost.objects.filter(user=request.user)
+    return render(request, 'all-blogs.html', {'blog_articles': blog_articles})
+
+def blog_details(request, pk):
+    blog_article_detail = BlogPost.objects.get(id=pk)
+    if request.user == blog_article_detail.user:
+        return render(request, 'blog-details.html', {'blog_article_detail':blog_article_detail})
+    else:
+        return redirect('/')
+
 
 def user_login(request):
     if request.method == 'POST':
